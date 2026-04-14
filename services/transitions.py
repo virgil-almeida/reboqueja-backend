@@ -11,7 +11,7 @@ from django.utils import timezone
 
 from .models import Solicitacao, SolicitacaoStatus
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from users.models import Prestador
 
 

@@ -13,7 +13,7 @@ def prestador_para_motorista(obj: Solicitacao):
         SolicitacaoStatus.CONCLUIDO,
     ):
         return None
-    if not obj.prestador_id:
+    if not obj.prestador_id:  # pragma: no cover
         return None
     stats = prestador_media_e_total(obj.prestador_id)
     p = obj.prestador

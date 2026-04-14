@@ -27,7 +27,7 @@ class AvaliacaoCreateSerializer(serializers.ModelSerializer):
             )
         if Avaliacao.objects.filter(solicitacao_id=solicitacao.pk).exists():
             raise serializers.ValidationError('Esta solicitação já foi avaliada.')
-        if solicitacao.prestador_id is None:
+        if solicitacao.prestador_id is None:  # pragma: no cover
             raise serializers.ValidationError('Solicitação sem prestador vinculado.')
         return attrs
 

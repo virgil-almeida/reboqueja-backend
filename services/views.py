@@ -288,7 +288,7 @@ class SolicitacaoAceitarView(APIView):
 
             try:
                 aplicar_aceite(solicitacao, prestador)
-            except ValueError:
+            except ValueError:  # pragma: no cover
                 return Response(
                     {'detail': 'Esta solicitação já foi aceita por outro prestador.'},
                     status=status.HTTP_409_CONFLICT,

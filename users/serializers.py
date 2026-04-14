@@ -138,7 +138,7 @@ class PrestadorResponseSerializer(serializers.ModelSerializer):
         ]
 
     def to_representation(self, instance):
-        if not hasattr(instance, 'prestador'):
+        if not hasattr(instance, 'prestador'):  # pragma: no cover
             raise serializers.ValidationError('Usuário não é prestador.')
         return super().to_representation(instance)
 

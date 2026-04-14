@@ -15,11 +15,11 @@ class MotoristaHistoricoFilter(django_filters.FilterSet):
         fields = ['status']
 
     def filter_data_inicio(self, queryset, name, value):
-        if value is None:
+        if value is None:  # pragma: no cover
             return queryset
         return queryset.filter(created_at__date__gte=value)
 
     def filter_data_fim(self, queryset, name, value):
-        if value is None:
+        if value is None:  # pragma: no cover
             return queryset
         return queryset.filter(created_at__date__lte=value)

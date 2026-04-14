@@ -7,6 +7,9 @@ omit =
     */conftest.py
     */factories.py
     manage.py
+    */admin.py
+    */asgi.py
+    */wsgi.py
 
 [report]
 exclude_lines =

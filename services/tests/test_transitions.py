@@ -64,6 +64,57 @@ class TransitionsTests(TestCase):
         with self.assertRaises(ValueError):
             aplicar_cancelamento_motorista(s)
 
+    def test_aceite_em_solicitacao_ja_aceita_levanta_erro(self):
+        s = Solicitacao.objects.create(
+            motorista=self.m,
+            prestador=self.p,
+            latitude=-19.9,
+            longitude=-43.9,
+            descricao='x',
+            tipo_veiculo='carro',
+            status=SolicitacaoStatus.ACEITO,
+            accepted_at=timezone.now(),
+        )
+        with self.assertRaises(ValueError):
+            aplicar_aceite(s, self.p)
+
+    def test_status_por_prestador_nao_vinculado_levanta_erro(self):
+        s = Solicitacao.objects.create(
+            motorista=self.m,
+            prestador=self.p,
+            latitude=-19.9,
+            longitude=-43.9,
+            descricao='x',
+            tipo_veiculo='carro',
+            status=SolicitacaoStatus.ACEITO,
+            accepted_at=timezone.now(),
+        )
+        outro_user = User.objects.create_user(
+            email='p2@t.com', password='x', full_name='P2',
+            cpf='86288366757', role=UserRole.PRESTADOR,
+        )
+        outro_prestador = Prestador.objects.create(
+            user=outro_user, placa='DEF4G56', modelo_veiculo='Y',
+            base_latitude=-19.0, base_longitude=-43.0,
+        )
+        with self.assertRaises(ValueError):
+            aplicar_status_prestador(s, outro_prestador, SolicitacaoStatus.A_CAMINHO)
+
+    def test_transicao_invalida_levanta_erro(self):
+        """ACEITO → CONCLUIDO direto (sem passar por A_CAMINHO) deve falhar."""
+        s = Solicitacao.objects.create(
+            motorista=self.m,
+            prestador=self.p,
+            latitude=-19.9,
+            longitude=-43.9,
+            descricao='x',
+            tipo_veiculo='carro',
+            status=SolicitacaoStatus.ACEITO,
+            accepted_at=timezone.now(),
+        )
+        with self.assertRaises(ValueError):
+            aplicar_status_prestador(s, self.p, SolicitacaoStatus.CONCLUIDO)
+
     def test_fluxo_prestador(self):
         s = Solicitacao.objects.create(
             motorista=self.m,
