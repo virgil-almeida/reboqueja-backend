@@ -1,0 +1,15 @@
+Django>=5.1,<7
+django-environ>=0.11.2
+psycopg2-binary>=2.9.9
+djangorestframework>=3.15.0
+djangorestframework-simplejwt>=5.3.0
+django-filter>=24.0
+drf-spectacular>=0.27.0
+whitenoise>=6.7.0
+gunicorn>=23.0.0
+
+# Testes / CI
+pytest>=8.0
+pytest-django>=4.8.0
+pytest-cov>=5.0.0
+factory-boy>=3.3.0
